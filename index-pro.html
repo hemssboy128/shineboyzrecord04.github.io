@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shine Boyz Pro Studio - DAW IA Professionnelle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles-pro.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+</head>
+<body class="dark-theme">
+    <!-- Barre de contrôle supérieure -->
+    <div class="top-control-bar">
+        <div class="transport-controls">
+            <button class="transport-btn" id="stopBtn">
+                <i class="fas fa-stop"></i>
+            </button>
+            <button class="transport-btn" id="playBtn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="transport-btn" id="recordBtn">
+                <i class="fas fa-circle"></i>
+            </button>
+            <button class="transport-btn" id="loopBtn">
+                <i class="fas fa-redo"></i>
+            </button>
+            
+            <div class="transport-info">
+                <span id="currentTime">00:00:00</span>
+                <span id="tempoDisplay">120 BPM</span>
+                <span id="timeSignature">4/4</span>
+            </div>
+        </div>
+        
+        <div class="master-controls">
+            <div class="master-fader">
+                <i class="fas fa-volume-up"></i>
+                <input type="range" id="masterVolume" min="0" max="100" value="80">
+                <span id="masterDb">-2.0 dB</span>
+            </div>
+            
+            <button class="tool-btn" id="metronomeBtn">
+                <i class="fas fa-drum"></i>
+            </button>
+            
+            <button class="tool-btn" id="saveBtn">
+                <i class="fas fa-save"></i>
+            </button>
+            
+            <button class="tool-btn" id="exportBtn">
+                <i class="fas fa-file-export"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Interface principale -->
+    <div class="main-interface">
+        <!-- Barre latérale gauche -->
+        <div class="left-sidebar">
+            <div class="logo-area">
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>SHINE BOYZ PRO</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3><i class="fas fa-folder-open"></i> Projets</h3>
+                <div class="project-list" id="projectList">
+                    <!-- Liste des projets -->
+                </div>
+                <button class="sidebar-btn" id="newProjectBtn">
+                    <i class="fas fa-plus"></i> Nouveau Projet
+                </button>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3><i class="fas fa-database"></i> Bibliothèque</h3>
+                <div class="library-browser">
+                    <div class="library-category active" data-category="vocals">
+                        <i class="fas fa-microphone"></i> Vocals
+                    </div>
+                    <div class="library-category" data-category="instruments">
+                        <i class="fas fa-guitar"></i> Instruments
+                    </div>
+                    <div class="library-category" data-category="samples">
+                        <i class="fas fa-drum"></i> Samples
+                    </div>
+                    <div class="library-category" data-category="loops">
+                        <i class="fas fa-redo"></i> Loops
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3><i class="fas fa-robot"></i> IA Tools</h3>
+                <button class="sidebar-btn ai-tool" data-tool="separate">
+                    <i class="fas fa-waveform"></i> Séparer Voix/Instrumental
+                </button>
+                <button class="sidebar-btn ai-tool" data-tool="recompose">
+                    <i class="fas fa-magic"></i> Recomposer avec IA
+                </button>
+                <button class="sidebar-btn ai-tool" data-tool="generate">
+                    <i class="fas fa-bolt"></i> Générer Instrumental
+                </button>
+                <button class="sidebar-btn ai-tool" data-tool="master">
+                    <i class="fas fa-sliders-h"></i> Mastering IA
+                </button>
+            </div>
+        </div>
+
+        <!-- Zone centrale : Arrange Window -->
+        <div class="arrange-window">
+            <div class="timeline-ruler">
+                <div class="ruler-markers" id="rulerMarkers">
+                    <!-- Marqueurs de temps -->
+                </div>
+            </div>
+            
+            <div class="track-list" id="trackList">
+                <!-- Liste des pistes -->
+            </div>
+            
+            <div class="arrange-area" id="arrangeArea">
+                <!-- Régions audio/MIDI -->
+            </div>
+            
+            <div class="mixer-toggle" id="toggleMixer">
+                <i class="fas fa-sliders-h"></i>
+            </div>
+        </div>
+
+        <!-- Mixer à droite -->
+        <div class="mixer-window" id="mixerWindow">
+            <div class="mixer-header">
+                <h3><i class="fas fa-sliders-h"></i> Mixer Console</h3>
+                <button class="mixer-btn" id="addTrackBtn">
+                    <i class="fas fa-plus"></i> Piste
+                </button>
+            </div>
+            
+            <div class="mixer-channels" id="mixerChannels">
+                <!-- Canaux du mixer -->
+            </div>
+            
+            <div class="master-channel">
+                <div class="master-meter">
+                    <div class="meter-left"></div>
+                    <div class="meter-right"></div>
+                </div>
+                <div class="master-control">
+                    <input type="range" class="master-fader" min="-60" max="6" value="0">
+                    <span class="master-label">MASTER</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre inférieure -->
+    <div class="bottom-panel">
+        <div class="panel-tabs">
+            <button class="panel-tab active" data-panel="browser">
+                <i class="fas fa-folder"></i> Browser
+            </button>
+            <button class="panel-tab" data-panel="inspector">
+                <i class="fas fa-info-circle"></i> Inspector
+            </button>
+            <button class="panel-tab" data-panel="plugins">
+                <i class="fas fa-plug"></i> Plugins
+            </button>
+            <button class="panel-tab" data-panel="ai">
+                <i class="fas fa-robot"></i> IA Studio
+            </button>
+        </div>
+        
+        <div class="panel-content" id="panelContent">
+            <!-- Contenu des panels -->
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-import"></i> Importer Audio</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-options">
+                    <div class="import-option" data-type="audio">
+                        <i class="fas fa-music"></i>
+                        <span>Fichier Audio</span>
+                        <small>WAV, MP3, FLAC</small>
+                    </div>
+                    <div class="import-option" data-type="midi">
+                        <i class="fas fa-piano"></i>
+                        <span>Fichier MIDI</span>
+                        <small>.mid, .midi</small>
+                    </div>
+                    <div class="import-option" data-type="project">
+                        <i class="fas fa-folder"></i>
+                        <span>Projet DAW</span>
+                        <small>Ableton, FL Studio</small>
+                    </div>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Glissez-déposez vos fichiers ici</p>
+                    <small>ou cliquez pour parcourir</small>
+                    <input type="file" id="fileInput" multiple accept="audio/*, .mid, .midi, .als, .flp">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="aiStudioModal">
+        <div class="modal-content wide-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-robot"></i> Studio IA Shine Boyz</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-tools-grid">
+                    <div class="ai-tool-card" data-tool="separate">
+                        <div class="tool-icon">
+                            <i class="fas fa-waveform"></i>
+                        </div>
+                        <h3>Séparation Audio</h3>
+                        <p>Isoler la voix de l'instrumental</p>
+                        <button class="tool-action">Appliquer</button>
+                    </div>
+                    
+                    <div class="ai-tool-card" data-tool="recompose">
+                        <div class="tool-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h3>Recomposition IA</h3>
+                        <p>Modifier l'arrangement avec IA</p>
+                        <button class="tool-action">Démarrer</button>
+                    </div>
+                    
+                    <div class="ai-tool-card" data-tool="generate">
+                        <div class="tool-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Génération IA</h3>
+                        <p>Créer un instrumental original</p>
+                        <button class="tool-action">Générer</button>
+                    </div>
+                    
+                    <div class="ai-tool-card" data-tool="master">
+                        <div class="tool-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <h3>Mastering IA</h3>
+                        <p>Mastering automatique pro</p>
+                        <button class="tool-action">Masteriser</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Worker pour mode hors ligne -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker enregistré'))
+                .catch(err => console.log('Erreur Service Worker:', err));
+        }
+    </script>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="script-pro.js"></script>
+</body>
+</html>
